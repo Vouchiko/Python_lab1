@@ -31,7 +31,7 @@ def Download(img_url, img_name, img_path):
     res = requests.get(img_url)
     path = os.path.join(os.path.join('dataset', img_path),f'{img_name}.jpg')
     
-    file = open (path, "wb")
+    file = open (path, mode = "wb")
     file.write (res.content)
     file.close()
 
