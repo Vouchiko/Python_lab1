@@ -18,4 +18,11 @@ def Url_create(request):
         for img in tmp: 
             tmp_url = "https:" + img.get("src")
             return (tmp_url)
-            
+
+def Dir_create(src):
+    if not os.path.isdir("dataset"):
+        os.mkdir("dataset")
+    if not os.path.exists(f'dataset/{src}'):
+        os.mkdir(f'dataset/{src}')
+
+
