@@ -1,13 +1,11 @@
 
 from bs4 import BeautifulSoup
 import requests
-import cv2 
 import os
-import os.path
 from time import sleep
 
 
-def Url_create(request):
+def create_url(request):
     data = []
     for i in range (1,2):
         print("Parsing", i, "page")
@@ -21,35 +19,30 @@ def Url_create(request):
             tmp_url = "https:" + img.get("src")
             yield (tmp_url)
 
-def Dir_create(src):
+def create_dir(src):
+    temp = f'dataset/{src}'
     if not os.path.isdir('dataset'):
         os.mkdir('dataset')
-    if not os.path.exists(f'dataset/{src}'):
-        os.mkdir(f'dataset/{src}')
+    if not os.path.exists(temp):
+        os.mkdir(temp)
 
-def Download(img_url, img_name, img_path):
+def download_img(img_url, img_name, img_path):
     res = requests.get(img_url)
-    path = os.path.join(os.path.join('dataset', img_path),f'{img_name}.jpg')
+    path = os.path.join('dataset', img_path,f'{img_name}.jpg')
     
     file = open (path, mode = "wb")
     file.write (res.content)
     file.close()
 
-def start(class_name):
-     Dir_create(class_name)
+def run(class_name):
+     create_dir(class_name)
      count = 0
-     for i in Url_create(class_name):
-        Download(i,str(count).zfill(4), class_name)
+     for i in create_url(class_name):
+        download_img(i,str(count).zfill(4), class_name)
         count += 1
         if (count % 5) == 0: 
             print('downloaded: ' ,count)
         sleep(1)
-
-if __name__ == '__main__':
-    print('Brown bear:')
-    start('brown bear')
-    print('Polar bear:')
-    start('polar bear')
 
 
 
