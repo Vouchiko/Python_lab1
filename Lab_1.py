@@ -44,6 +44,3 @@ def run(class_name):
         if (count % 5) == 0: 
             print('downloaded: ', count)
         sleep(1)
-
-
-
